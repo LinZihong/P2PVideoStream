@@ -1,0 +1,25 @@
+<video id="the_vid" width="640" height="480" controls autoplay>
+</video>
+<script src="http://cdn.peerjs.com/0.3/peer.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+var peer = new Peer({key: '9fdhv6h95r60f6r'});
+
+peer.on('open', function(id) {
+	console.log(id);
+})
+
+peer.on('call', function(call) {
+  // Answer the call, providing our mediaStream
+  call.answer();
+  console.log('听到了 哈哈')
+  renderVid(call);
+});
+
+function renderVid(call)
+{
+	call.on('stream', function(stream) {
+		$('#the_vid').prop('src', URL.createObjectURL(stream));
+	});
+}
+</script>
